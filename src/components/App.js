@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import QuoteForm from './QuoteForm'
 import QuoteDisplay from './QuoteDisplay'
+import GitDisplay from './GitDisplay'
 
 var helpers = require('../helpers.js')
 
@@ -25,8 +26,9 @@ class App extends Component {
   render() {
     return (
       <div className="row">
-        <QuoteForm updateQuote={this.updateQuote}></QuoteForm>
-        <QuoteDisplay quote={this.state}></QuoteDisplay>
+        {/* <QuoteForm updateQuote={this.updateQuote}></QuoteForm>
+        <QuoteDisplay quote={this.state}></QuoteDisplay> */}
+        <GitDisplay></GitDisplay>
       </div>
     );
   }
