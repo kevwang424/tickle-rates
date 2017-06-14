@@ -12,18 +12,29 @@ class GitDisplay extends Component {
   }
 
   handleClick(){
-    axios.get("https://api.github.com/users/kevwang424/repos")
-      .then((response) => {
-        this.setState({
-          name: response.data
-        })
+    axios({
+      method: 'get',
+      url: "https://api.github.com/users/adsf23/repos"
+    }).then((response) => {
+      this.setState({
+        name: response.data
       })
-      .catch((error) => {
-        this.setState({
-          error: error.message
-        })
+    }).catch((error) => {
+        if (error.response) {
+          this.setState({
+            error: error.response.data.message
+          })
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(`This is error.request ${error.request}`);
+        } else {
+          console.log('Error message is', error.message);
+        }
+        console.log(`This is error.config ${error.config}`);
       })
-  }
+    }
 
 
   render(){
@@ -31,8 +42,6 @@ class GitDisplay extends Component {
     let lis = this.state.name.map((repo) => {
       return <li key={repo.id}>{repo.name}</li>
     })
-
-
 
     if (this.state.error){
       return (
