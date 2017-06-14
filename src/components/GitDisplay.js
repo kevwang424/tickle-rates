@@ -6,7 +6,8 @@ class GitDisplay extends Component {
   constructor(){
     super()
     this.state = {
-      name: []
+      name: [],
+      error: false
     }
   }
 
@@ -17,8 +18,10 @@ class GitDisplay extends Component {
           name: response.data
         })
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
+        this.setState({
+          error: error.message
+        })
       })
   }
 
@@ -29,17 +32,25 @@ class GitDisplay extends Component {
       return <li key={repo.id}>{repo.name}</li>
     })
 
-    console.log(lis)
 
-    return (
-      <div>
-        <div>This is GitDisplay</div>
-        <button onClick={this.handleClick.bind(this)}>Click to retrieve Kevins git repos</button>
-        <ul>
-          {lis}
-        </ul>
-      </div>
-    )
+
+    if (this.state.error){
+      return (
+          <div>
+            {this.state.error}
+          </div>
+        )
+      } else {
+        return (
+          <div>
+            <div>This is GitDisplay</div>
+            <button onClick={this.handleClick.bind(this)}>Click to retrieve Kevins git repos</button>
+            <ul>
+              {lis}
+            </ul>
+          </div>
+        )
+      }
   }
 }
 
